@@ -1,24 +1,35 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import  Sidebar  from './components/Sidebar';
+import Home from './components/pages/Home'
+import Profile from './components/pages/Profile'
+import Product from './components/pages/Product'
+import Sales from './components/pages/Sales'
+import Pos from './components/pages/Pos'
+import Receivable from './components/pages/Receivable';
+import Vendor from './components/pages/Vendor'
+import Expenses from './components/pages/Expenses'
+import Users from './components/pages/Users'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Router>
+    <Sidebar></Sidebar>
+      <Routes>
+        <Route exact path='/' element={<Home/>}></Route>
+        <Route exact path='/profile' element={<Profile/>}></Route>
+        <Route exact path='/product' element={<Product/>}></Route>
+        <Route exact path='/sales' element={<Sales/>}></Route>
+        <Route exact path='/pos' element={<Pos/>}></Route>
+        <Route exact path='/receivable' element={<Receivable/>}></Route>
+        <Route exact path='/vendor' element={<Vendor/>}></Route>
+        <Route exact path='/expenses' element={<Expenses/>}></Route>
+        <Route exact path='/users' element={<Users/>}></Route>
+      </Routes>
+    </Router>
+    </>
   );
 }
 
