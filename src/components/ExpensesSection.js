@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Table, Button } from 'react-bootstrap';
 import './ExpensesSection.css'
+import Axios from 'axios'
 
 const ExpensesSection = ({ titleClose, titleAdd }) => {
 
@@ -8,6 +9,36 @@ const ExpensesSection = ({ titleClose, titleAdd }) => {
 
     const onShowAddBtn = () => setShowBtn(!showBtn);
     const showAddBtn  = showBtn;
+
+    const [ expenseDescription, setExpenseDescription ] = useState("")
+    const [ expenseAmount, setExpenseAmount ] =  useState("")
+    const [ expenseDate, setExpenseDate] = useState("")
+
+    const [ expenseList, setExpenseList ] = useState([])
+
+    useEffect(() => {
+      Axios.get('http://localhost:3002/api/getexpense').then((response) => {
+        setExpenseList(response.data)
+      })
+    }, [])
+
+    const submitBtn = () => {
+      Axios.post('http://localhost:3002/api/insertexpense', {
+
+        expenseDescription: expenseDescription,
+        expenseAmount: expenseAmount,
+        expenseDate: expenseDate,
+      });
+
+      setExpenseList([
+        ...setExpenseList, 
+        {
+          expenseDescription: expenseDescription,
+          expenseAmount: expenseAmount,
+          expenseDate: expenseDate
+        },
+      ])
+    }
 
   return (
       <Container>
@@ -22,22 +53,43 @@ const ExpensesSection = ({ titleClose, titleAdd }) => {
         { showBtn  && <form className="add-form">
               <div className="form-control">
                   <label>Description</label>
-                  <input type='text' placeholder="Your description"></input>
+                  <input 
+                    type='text' 
+                    name='expenseDescription'
+                    onChange={(e) => { setExpenseDescription(e.target.value) }}
+                    placeholder="Your description"></input>
                 </div>
 
 
                 <div className="form-control">
                     <label>Amount</label>
-                    <input type='email' placeholder='Your Amount'>
+                    <input 
+                      type='text' 
+                      name='expenseAmount'
+                      onChange={(e) => { setExpenseAmount(e.target.value) }}
+                      placeholder='Your Amount'>
                     </input>
                 </div>
 
                 <div className="form-control">
                     <label>Date</label>
-                    <input type='date' ></input>
+                    <input 
+                      type='date' 
+                      name='expenseDate'
+                      onChange={(e) => { setExpenseDate(e.target.value) }}
+                    >
+
+                      </input>
                 </div>
 
-                <input type='submit' value='Add Expense' style={{backgroundColor: '#000' }} className="btn btn-block"></input>
+                <input 
+                  type='submit' 
+                  value='Add Expense' 
+                  onClick={submitBtn}
+                  style={{backgroundColor: '#000' }} 
+                  className="btn btn-block"
+                >
+                </input>
             </form>}
 
 
@@ -52,43 +104,21 @@ const ExpensesSection = ({ titleClose, titleAdd }) => {
                 <th>Update</th>
                 <th>Delete</th>
             </thead>
-            <tbody className='text-center'>
-                <tr>
-                <td>1</td>
-                <td>Counter Book</td>
-                <td>100</td>
-                <td>20</td>
-                <td><Button variant='info'>Update</Button></td>
-                <td><Button variant='danger'>Delete</Button></td>
-                </tr>
 
-                <tr>
-                <td>2</td>
-                <td>Counter Book</td>
-                <td>100</td>
-                <td>20</td>
-                <td><Button variant='info'>Update</Button></td>
-                <td><Button variant='danger'>Delete</Button></td>
-                </tr>
-
-                <tr>
-                <td>3</td>
-                <td>Counter Book</td>
-                <td>100</td>
-                <td>20</td>
-                <td><Button variant='info'>Update</Button></td>
-                <td><Button variant='danger'>Delete</Button></td>
-                </tr>
-
-                <tr>
-                <td>4</td>
-                <td>Counter Book</td>
-                <td>100</td>
-                <td>20</td>
-                <td><Button variant='info'>Update</Button></td>
-                <td><Button variant='danger'>Delete</Button></td>
-                </tr>
-            </tbody>
+            {expenseList.map((val) => {
+              return (
+                <tbody className='text-center'>
+                  <tr>
+                  <td>{val.id}</td>
+                  <td>{val.expenseDescription}</td>
+                  <td>{val.expenseAmount}</td>
+                  <td>{val.expenseDate}</td>
+                  <td><Button variant='info'>Update</Button></td>
+                  <td><Button variant='danger'>Delete</Button></td>
+                  </tr>
+                </tbody>
+              )
+            })}
             </Table>
 
           </header>
