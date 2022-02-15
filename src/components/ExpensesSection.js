@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Container, Table, Button } from 'react-bootstrap';
 import './ExpensesSection.css'
 import Axios from 'axios'
@@ -30,6 +31,8 @@ const ExpensesSection = ({ titleClose, titleAdd }) => {
         expenseDate: expenseDate,
       });
 
+      {submitBtn ? window.alert('Expense has been added') : window.alert('Failed, Try again') }
+
       setExpenseList([
         ...setExpenseList, 
         {
@@ -39,6 +42,23 @@ const ExpensesSection = ({ titleClose, titleAdd }) => {
         },
       ])
     }
+
+
+    const setExpenseData = (data) => {
+      let { id, expenseDescription, expenseAmount, expenseDate } = data;
+      localStorage.setItem('id', id);
+      localStorage.setItem('expenseDescription', expenseDescription);
+      localStorage.setItem('expenseAmount', expenseAmount);
+      localStorage.setItem('expenseDate', expenseDate);
+   }
+
+   const onDeleteExpense = (id) => {
+      Axios.delete(`http://localhost:3002/api/expensedelete/${id}`)  
+      {onDeleteExpense ? window.alert('Expense has been deleted') : window.alert('Failed, Try again')}  
+    }
+
+
+
 
   return (
       <Container>
@@ -107,14 +127,27 @@ const ExpensesSection = ({ titleClose, titleAdd }) => {
 
             {expenseList.map((val) => {
               return (
-                <tbody className='text-center'>
+                <tbody>
                   <tr>
                   <td>{val.id}</td>
                   <td>{val.expenseDescription}</td>
                   <td>{val.expenseAmount}</td>
                   <td>{val.expenseDate}</td>
-                  <td><Button variant='info'>Update</Button></td>
-                  <td><Button variant='danger'>Delete</Button></td>
+                  <td className='text-center'>
+                        <Link to='/updateExpense'>
+                            <Button 
+                                onClick={() => setExpenseData(val)} 
+                                variant='info'>Edit</Button>
+                        </Link>
+                    </td>
+                    <td className='text-center'>
+                      <Button 
+                        onClick={() => {onDeleteExpense(val.id)}}
+                        variant='danger' 
+                        >
+                          Delete
+                      </Button>
+                  </td>
                   </tr>
                 </tbody>
               )

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Table, Button } from 'react-bootstrap';
 import './UserSection.css'
 import Axios  from 'axios';
+import e from 'express';
 
 const UsersSection = ({ titleClose, titleAdd }) => {
 
@@ -24,9 +25,18 @@ const UsersSection = ({ titleClose, titleAdd }) => {
 
     const submitBtn = () => {
 
+        e.preventDefault()
+
+        if(!fullName)
+        {
+            window.alert('Please enter your fullname')
+        }
+
         if(userPassword != userRepeatPassword) {
             window.alert('Password doesnot match')
         }
+
+        
 
         else {
         Axios.post('http://localhost:3002/api/insertuser', {
@@ -34,6 +44,7 @@ const UsersSection = ({ titleClose, titleAdd }) => {
             userEmail: userEmail,
             userPassword: userPassword,
          });
+         {submitBtn ? window.alert('User has been added') : window.alert('Failed, Try again') }
         }
 
         setUserList([
@@ -74,7 +85,7 @@ const UsersSection = ({ titleClose, titleAdd }) => {
                         type='email'
                         name='userEmail'
                         onChange={(e) => { setUserEmail(e.target.value) }}
-                        placeholder='Your E-mail' 
+                        placeholder='Your E-mail'
                     >
                     </input>
                 </div>
@@ -85,7 +96,7 @@ const UsersSection = ({ titleClose, titleAdd }) => {
                         type='password'
                         name='userPassword'
                         onChange={(e) => { setUserPassword(e.target.value) }}
-                        placeholder='Your Password' 
+                        placeholder='Your Password'
                     >
                     </input>
                 </div>
@@ -120,13 +131,13 @@ const UsersSection = ({ titleClose, titleAdd }) => {
 
             { userList.map((val) => {
                 return (
-                    <tbody className='text-center'>
+                    <tbody>
                         <tr>
                         <td>{val.id}</td>
                         <td>{val.fullName}</td>
                         <td>{val.userEmail}</td>
-                        <td><Button variant='info'>Update</Button></td>
-                        <td><Button variant='danger'>Delete</Button></td>
+                        <td className='text-center'><Button variant='info'>Update</Button></td>
+                        <td className='text-center'><Button variant='danger'>Delete</Button></td>
                         </tr>
                     </tbody>    
                 )

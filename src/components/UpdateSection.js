@@ -34,8 +34,8 @@ const UpdateSection = () => {
 
         {
           updateVendorData ? 
-          window.alert('VENDOR HAS BEEN UPDATED SUCCESSFULLY') : 
-          window.alert('FAILED TO UPDATE')
+          window.alert('Vendor has been updated') : 
+          window.alert('Failed, Try again')
         }
        
     }

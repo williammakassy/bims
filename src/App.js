@@ -12,6 +12,8 @@ import Vendor from './components/pages/Vendor'
 import Expenses from './components/pages/Expenses'
 import Users from './components/pages/Users'
 import UpdateVendor from './components/pages/UpdateVendor';
+import UpdateProduct from './components/pages/UpdateProduct';
+import UpdateExpenses from './components/pages/UpdateExpenses';
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
         <Route exact path='/expenses' element={<Expenses/>}></Route>
         <Route exact path='/users' element={<Users/>}></Route>
         <Route exact path='/updatevendor' element={<UpdateVendor/>}></Route>
+        <Route exact path='/updateproduct' element={<UpdateProduct/>}></Route>
+        <Route exact path='/updateexpense' element={<UpdateExpenses/>}></Route>
       </Routes>
     </Router>
     </>

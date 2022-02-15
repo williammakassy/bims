@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'
 import { Button, Form } from 'react-bootstrap';
 import { Container, Table } from 'react-bootstrap';
 import './ProductSection.css'
@@ -28,6 +29,8 @@ const ProductSection = ({ title, titleAdd, titleClose}) => {
             productSell: productSell,
         });
 
+        {submitBtn ? window.alert('Product has been added') : window.alert('Failed, Try again') }
+
         setProductList([
             ...setProductList, 
             {
@@ -40,13 +43,29 @@ const ProductSection = ({ title, titleAdd, titleClose}) => {
 
     }
 
-
-
     const [showProductForm, setShowProductForm] = useState(false)
 
     const onAdd = () => setShowProductForm(!showProductForm)
 
     const showAdd = showProductForm 
+
+
+    const setProductData = (data) => {
+        let { id, productName, productQty, productBuy, productSell } = data;
+        localStorage.setItem('id', id);
+        localStorage.setItem('productName', productName);
+        localStorage.setItem('productQty', productQty);
+        localStorage.setItem('productBuy', productBuy);
+        localStorage.setItem('productSell', productSell);
+     }
+
+     const onDeleteProduct = (id) => {
+        Axios.delete(`http://localhost:3002/api/productdelete/${id}`)  
+        {onDeleteProduct ? window.alert('Product has been deleted') : window.alert('Failed, Try again')}  
+      }
+
+
+
 
   return (
       <Container className='container'>
@@ -127,7 +146,7 @@ const ProductSection = ({ title, titleAdd, titleClose}) => {
 
             {productList.map((val) => {
                 return (
-                    <tbody className='text-center'>
+                    <tbody>
                     <tr>
                     <td>{val.id}</td>
                     <td>{val.productName}</td>
@@ -136,8 +155,21 @@ const ProductSection = ({ title, titleAdd, titleClose}) => {
                     <td>80</td>
                     <td>{val.productBuy}</td>
                     <td>{val.productSell}</td>
-                    <td><Button variant='info'>Edit</Button></td>
-                    <td><Button variant='danger'>Delete</Button></td>
+                    <td className='text-center'>
+                        <Link to='/updateProduct'>
+                            <Button 
+                                onClick={() => setProductData(val)} 
+                                variant='info'>Edit</Button>
+                        </Link>
+                    </td>
+                    <td className='text-center'>
+                      <Button 
+                        onClick={() => {onDeleteProduct(val.id)}}
+                        variant='danger' 
+                        >
+                          Delete
+                      </Button>
+                  </td>
                     </tr>
                 </tbody>
                 )

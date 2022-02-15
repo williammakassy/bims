@@ -46,6 +46,36 @@ bisApp.post('/api/insertproduct', (req,res) => {
 })
 
 
+// UPDATE PRODUCT
+
+
+bisApp.put('/api/updateproduct', (req, res) => {
+    const id = req.body.id
+    const productName = req.body.productName
+    const productQty = req.body.productQty
+    const productBuy = req.body.productBuy
+    const productSell = req.body.productSell
+
+    const sqlUpdateProduct = 
+    "UPDATE bistableproducts001 SET productName= ?, productQty= ?, productBuy= ?, productSell= ? WHERE id= ?";
+    bisDbConnection.query(sqlUpdateProduct, 
+        [ productName, productQty, productBuy, productSell , id ], (err, result) => {
+    console.log(err);
+    })
+})
+
+// DELETE PRODUCT
+
+bisApp.delete('/api/productdelete/:id', (req, res) => {
+    const productid = req.params.id
+    const sqlDeleteProduct = "DELETE FROM bistableproducts001 WHERE id = ?"
+    bisDbConnection.query(sqlDeleteProduct, productid, (err, result) => {
+        console.log(err);
+    })
+})
+
+
+
 
 // SELECT USERS
 
@@ -97,6 +127,34 @@ bisApp.post('/api/insertexpense', (req, res) => {
     })
 
 })
+
+
+// UDPATE EXPENSE
+
+bisApp.put('/api/updateexpense', (req, res) => {
+    const id = req.body.id
+    const expenseDescription = req.body.expenseDescription
+    const expenseAmount = req.body.expenseAmount
+    const expenseDate = req.body.expenseDate
+
+    const sqlUpdateExpense = 
+    "UPDATE bistableexpenses001 SET expenseDescription= ?, expenseAmount= ?, expenseDate= ? WHERE id= ?";
+    bisDbConnection.query(sqlUpdateExpense, 
+        [ expenseDescription, expenseAmount, expenseDate, id ], (err, result) => {
+    console.log(err);
+    })
+})
+
+// DELETING EXPENSE 
+
+bisApp.delete('/api/expensedelete/:id', (req, res) => {
+    const expenseid = req.params.id
+    const sqlDeleteExpense = "DELETE FROM bistableexpenses001 WHERE id = ?"
+    bisDbConnection.query(sqlDeleteExpense, expenseid, (err, result) => {
+        console.log(err);
+    })
+})
+
 
 
 // SELECT VENDOR 

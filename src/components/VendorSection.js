@@ -59,7 +59,7 @@ const setData = (data) => {
 const onDelete = (id) => {
   Axios.delete(`http://localhost:3002/api/vendordelete/${id}`)
 
-  {onDelete ? window.alert('VENDOR HAS BEEN DELETED') : window.alert('UNSUCCESSFUL ACTION')}
+  {onDelete ? window.alert('Vendor info has been deleted') : window.alert('Failed, Try again')}
 
 }
 
@@ -143,7 +143,7 @@ const onDelete = (id) => {
                         <Button 
                           onClick={() => setData(val)} 
                           variant='info'>
-                            Update
+                            Edit
                         </Button>
                       </Link>
                   </td>
