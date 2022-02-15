@@ -126,6 +126,33 @@ bisApp.post('/api/insertvendor', (req, res) => {
 
 })
 
+// UPDATE VENDOR INFO
+
+bisApp.put('/api/updatevendor', (req, res) => {
+    const id = req.body.id
+    const vendorName = req.body.vendorName
+    const vendorEmail = req.body.vendorEmail
+    const vendorPhone = req.body.vendorPhone
+    const vendorCity = req.body.vendorCity
+
+    const sqlUpdateVendor = 
+    "UPDATE bistablevendor001 SET vendorName= ?, vendorEmail= ?, vendorPhone= ?, vendorCity= ? WHERE id= ?";
+    bisDbConnection.query(sqlUpdateVendor, 
+        [ vendorName, vendorEmail, vendorPhone, vendorCity, id ], (err, result) => {
+    console.log(err);
+    })
+})
+
+// DELETING VENDOR 
+
+bisApp.delete('/api/vendordelete/:id', (req, res) => {
+    const id = req.params.id
+    const sqlDeleteVendor = "DELETE FROM bistablevendor001 WHERE id = ?"
+    bisDbConnection.query(sqlDeleteVendor, id, (err, result) => {
+        console.log(err);
+    })
+})
+
 bisApp.listen(3002, () => {
     console.log("Server is in running mode")
 })

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Container, Table, Button } from 'react-bootstrap';
 import './VendorSection.css'
 import Axios from 'axios'
@@ -41,6 +42,24 @@ const VendorSection = ({ titleClose, titleAdd }) => {
           vendorCity: vendorCity,
         },
     ])
+
+}
+
+// SETTING DATA INTO LOCAL STORAGE IN OUR BROWSER MUHIMU SANA HII
+
+const setData = (data) => {
+   let { id, vendorName, vendorEmail, vendorPhone, vendorCity } = data;
+   localStorage.setItem('id', id);
+   localStorage.setItem('vendorName', vendorName);
+   localStorage.setItem('vendorEmail', vendorEmail);
+   localStorage.setItem('vendorPhone', vendorPhone);
+   localStorage.setItem('vendorCity', vendorCity);
+}
+
+const onDelete = (id) => {
+  Axios.delete(`http://localhost:3002/api/vendordelete/${id}`)
+
+  {onDelete ? window.alert('VENDOR HAS BEEN DELETED') : window.alert('UNSUCCESSFUL ACTION')}
 
 }
 
@@ -112,15 +131,31 @@ const VendorSection = ({ titleClose, titleAdd }) => {
             </thead>
             {vendorList.map((val) => {
               return (
-                <tbody className='text-center'>
+                <tbody>
                   <tr>
                   <td>{val.id}</td>
                   <td>{val.vendorName}</td>
                   <td>{val.vendorEmail}</td>
                   <td>{val.vendorCity}</td>
                   <td>{val.vendorPhone}</td>
-                  <td><Button variant='info'>Update</Button></td>
-                  <td><Button variant='danger'>Delete</Button></td>
+                  <td className='text-center'>
+                      <Link to='/updatevendor'>
+                        <Button 
+                          onClick={() => setData(val)} 
+                          variant='info'>
+                            Update
+                        </Button>
+                      </Link>
+                  </td>
+
+                  <td className='text-center'>
+                      <Button 
+                        onClick={() => {onDelete(val.id)}}
+                        variant='danger' 
+                        >
+                          Delete
+                      </Button>
+                  </td>
                   </tr>
                 </tbody>
               )

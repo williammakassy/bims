@@ -11,6 +11,7 @@ import Receivable from './components/pages/Receivable';
 import Vendor from './components/pages/Vendor'
 import Expenses from './components/pages/Expenses'
 import Users from './components/pages/Users'
+import UpdateVendor from './components/pages/UpdateVendor';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route exact path='/vendor' element={<Vendor/>}></Route>
         <Route exact path='/expenses' element={<Expenses/>}></Route>
         <Route exact path='/users' element={<Users/>}></Route>
+        <Route exact path='/updatevendor' element={<UpdateVendor/>}></Route>
       </Routes>
     </Router>
     </>
