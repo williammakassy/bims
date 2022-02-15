@@ -28,6 +28,7 @@ bisApp.get("/api/getproduct", (req, res) => {
     })
 })
 
+
 // INSERT PRODUCTS 
 
 bisApp.post('/api/insertproduct', (req,res) => {
@@ -144,6 +145,7 @@ bisApp.put('/api/updateexpense', (req, res) => {
     console.log(err);
     })
 })
+
 
 // DELETING EXPENSE 
 

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Container, Table, Button } from 'react-bootstrap';
 import './UserSection.css'
 import Axios  from 'axios';
-import e from 'express';
 
 const UsersSection = ({ titleClose, titleAdd }) => {
 
@@ -24,19 +23,10 @@ const UsersSection = ({ titleClose, titleAdd }) => {
     }, [])
 
     const submitBtn = () => {
-
-        e.preventDefault()
-
-        if(!fullName)
-        {
-            window.alert('Please enter your fullname')
-        }
-
+  
         if(userPassword != userRepeatPassword) {
             window.alert('Password doesnot match')
         }
-
-        
 
         else {
         Axios.post('http://localhost:3002/api/insertuser', {
@@ -44,8 +34,10 @@ const UsersSection = ({ titleClose, titleAdd }) => {
             userEmail: userEmail,
             userPassword: userPassword,
          });
-         {submitBtn ? window.alert('User has been added') : window.alert('Failed, Try again') }
+            {submitBtn ? window.alert('User has been added') : window.alert('Failed, Try again') }
         }
+
+
 
         setUserList([
             ...setUserList, 

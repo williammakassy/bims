@@ -13,13 +13,14 @@ const ProductSection = ({ title, titleAdd, titleClose}) => {
     const [ productSell, setProductSell ] = useState("")
 
     const [productList, setProductList] = useState([])
+    const [productListQty, setProductListQty] = useState([])
 
     useEffect(() => {
         Axios.get('http://localhost:3002/api/getproduct').then((response) => {
             setProductList(response.data)
         })
     }, [])
-    
+  
 
     const submitBtn = () => {
         Axios.post('http://localhost:3002/api/insertproduct', {
@@ -43,6 +44,13 @@ const ProductSection = ({ title, titleAdd, titleClose}) => {
 
     }
 
+    const onDeleteProduct = (id) => {
+        Axios.delete(`http://localhost:3002/api/productdelete/${id}`)  
+        {onDeleteProduct ? window.alert('Product has been deleted') : window.alert('Failed, Try again')}  
+      }
+
+
+
     const [showProductForm, setShowProductForm] = useState(false)
 
     const onAdd = () => setShowProductForm(!showProductForm)
@@ -58,11 +66,6 @@ const ProductSection = ({ title, titleAdd, titleClose}) => {
         localStorage.setItem('productBuy', productBuy);
         localStorage.setItem('productSell', productSell);
      }
-
-     const onDeleteProduct = (id) => {
-        Axios.delete(`http://localhost:3002/api/productdelete/${id}`)  
-        {onDeleteProduct ? window.alert('Product has been deleted') : window.alert('Failed, Try again')}  
-      }
 
 
 
@@ -147,33 +150,63 @@ const ProductSection = ({ title, titleAdd, titleClose}) => {
             {productList.map((val) => {
                 return (
                     <tbody>
-                    <tr>
-                    <td>{val.id}</td>
-                    <td>{val.productName}</td>
-                    <td>{val.productQty}</td>
-                    <td>20</td>
-                    <td>80</td>
-                    <td>{val.productBuy}</td>
-                    <td>{val.productSell}</td>
-                    <td className='text-center'>
-                        <Link to='/updateProduct'>
-                            <Button 
-                                onClick={() => setProductData(val)} 
-                                variant='info'>Edit</Button>
-                        </Link>
-                    </td>
-                    <td className='text-center'>
-                      <Button 
-                        onClick={() => {onDeleteProduct(val.id)}}
-                        variant='danger' 
-                        >
-                          Delete
-                      </Button>
-                  </td>
-                    </tr>
-                </tbody>
-                )
-            })}
+                        {val.productQty < 50 ?
+                            <tr className='bg-warning'>
+                                <td>{val.id}</td>
+                                <td>{val.productName}</td>
+                                <td>{val.productQty}</td>
+                                <td>20</td>
+                                <td>80</td>
+                                <td>{val.productBuy}</td>
+                                <td>{val.productSell}</td>
+                                <td className='text-center'>
+                                    <Link to='/updateProduct'>
+                                        <Button 
+                                            onClick={() => setProductData(val)} 
+                                            variant='info'>Edit</Button>
+                                    </Link>
+                                </td>
+                                <td className='text-center'>
+                                <Button 
+                                    onClick={() => {onDeleteProduct(val.id)}}
+                                    variant='danger' 
+                                    >
+                                    Delete
+                                </Button>
+                                </td>
+                            
+                            </tr>
+                    :
+
+                            <tr>
+                                <td>{val.id}</td>
+                                <td>{val.productName}</td>
+                                <td>{val.productQty}</td>
+                                <td>20</td>
+                                <td>80</td>
+                                <td>{val.productBuy}</td>
+                                <td>{val.productSell}</td>
+                                <td className='text-center'>
+                                    <Link to='/updateProduct'>
+                                        <Button 
+                                            onClick={() => setProductData(val)} 
+                                            variant='info'>Edit</Button>
+                                    </Link>
+                                </td>
+                                <td className='text-center'>
+                                <Button 
+                                    onClick={() => {onDeleteProduct(val.id)}}
+                                    variant='danger' 
+                                    >
+                                    Delete
+                                </Button>
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                    )
+                })}
          
             </Table>
       </header>
