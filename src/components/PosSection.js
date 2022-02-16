@@ -1,6 +1,47 @@
+import React, { useState, useEffect } from 'react';
 import { Card, Row, Container, Button, Form } from 'react-bootstrap';
+import Axios from 'axios'
+
 
 const PosSection = () => {
+
+    const [ productID, setProductID ] = useState("")
+    const [ quantity, setQuantity ] = useState("")
+    const [ amount, setAmount ] = useState("")
+    const [ saledate, setSaleDate ] = useState("")
+
+    const [productList, setProductList] = useState([])
+    
+    useEffect(() => {
+        Axios.get('http://localhost:3002/api/getproduct').then((response) => {
+            setProductList(response.data)
+        })
+    }, [])
+
+
+
+    const submitBtn = () => {
+        Axios.post('http://localhost:3002/api/insertcashsale', {
+            productID: productID,
+            quantity: quantity,
+            amount: amount,
+            saledate: saledate,
+        });
+
+        setProductList([
+            ...setProductList, 
+            {
+                productID: productID,
+                quantity: quantity,
+                amount: amount,
+                saledate: saledate,
+            },
+        ])
+
+        
+
+    }
+
   return (
       <div style={{ marginTop: '5rem' }}>
           <Container>
@@ -13,26 +54,57 @@ const PosSection = () => {
                             <Form>
                                 <Form.Group className='mb-3' controlId='formBasicEmail'>
                                     <Form.Label>PRODUCT NAME</Form.Label>
-                                    <Form.Control type='text'></Form.Control>
+                                    <Form.Select name='productID'
+                                    onChange={(e) => { setProductID(e.target.value)}}
+                                    > 
+                                        {productList.map((val) => {
+                                            return (
+                                                <option value={val.id}>{val.productName}&nbsp;@&nbsp;{val.productSell}</option>
+                                            )
+                                        })}
+                                    </Form.Select>
                                     <Form.Text className='text-muted'>
                                         Please select the required product name.
+                                    </Form.Text>
+                                </Form.Group>
+
+                                <Form.Group className='mb-3' controlId='formBasicEmail'>
+                                    <Form.Label>PRODUCT QTY</Form.Label>
+                                    <Form.Control 
+                                        type='number' 
+                                        name='quantity'
+                                        onChange={(e) => { setQuantity(e.target.value) }}
+                                        ></Form.Control>
+                                    <Form.Text className='text-muted'>
+                                        Note: Enter product quantity
                                     </Form.Text>
                                 </Form.Group>
                 
                                 <Form.Group className='mb-3' controlId='formBasicEmail'>
                                     <Form.Label>AMOUNT</Form.Label>
-                                    <Form.Control type='text'></Form.Control>
+                                    <Form.Control 
+                                        type='number' 
+                                        name='amount'
+                                        onChange={(e) => { setAmount(e.target.value) }}
+                                        ></Form.Control>
                                     <Form.Text className='text-muted'>
                                         Note: currency in Tanzanian shillings (Tzs)
                                     </Form.Text>
                                 </Form.Group>
 
                                 <Form.Group className='mb-3' controlId='formBasicEmail'>
-                                    <Form.Label>DISCOUNT</Form.Label>
-                                    <Form.Control type='text'></Form.Control>
+                                    <Form.Label>DATE</Form.Label>
+                                    <Form.Control 
+                                        type='date'
+                                        name='saledate'
+                                        onChange={(e) => { setSaleDate(e.target.value) }}
+                                        ></Form.Control>
+                                    <Form.Text className='text-muted'>
+                                        Note: Select the appropriate date.
+                                    </Form.Text>
                                 </Form.Group>
 
-                                <Button variant='primary' type='submit'>MAKE CASH SALE</Button>
+                                <Button variant='primary' type='submit' onClick={submitBtn}>MAKE CASH SALE</Button>
                             </Form>
                               </Card.Text>
                     </Card.Body>
@@ -45,33 +117,50 @@ const PosSection = () => {
                             <Form>
                                 <Form.Group className='mb-3' controlId='formBasicEmail'>
                                     <Form.Label>PRODUCT NAME</Form.Label>
-                                    <Form.Control type='text'></Form.Control>
+                                    <Form.Select> 
+                                        {productList.map((val) => {
+                                            return (
+                                                <option value={val.id}>{val.productName}&nbsp;@&nbsp;{val.productSell}</option>
+                                            )
+                                        })}
+                                    </Form.Select>
                                     <Form.Text className='text-muted'>
                                         Please select the required product name.
+                                    </Form.Text>
+                                </Form.Group>
+
+                                <Form.Group className='mb-3' controlId='formBasicEmail'>
+                                    <Form.Label>PRODUCT QTY</Form.Label>
+                                    <Form.Control type='number' name='quantity'></Form.Control>
+                                    <Form.Text className='text-muted'>
+                                        Note: Enter product quantity
                                     </Form.Text>
                                 </Form.Group>
                 
                                 <Form.Group className='mb-3' controlId='formBasicEmail'>
                                     <Form.Label>AMOUNT</Form.Label>
-                                    <Form.Control type='text'></Form.Control>
+                                    <Form.Control type='text' name='amount'></Form.Control>
                                     <Form.Text className='text-muted'>
                                         Note: currency in Tanzanian shillings (Tzs)
                                     </Form.Text>
                                 </Form.Group>
 
                                 <Form.Group className='mb-3' controlId='formBasicEmail'>
-                                    <Form.Label>DISCOUNT</Form.Label>
-                                    <Form.Control type='text'></Form.Control>
+                                    <Form.Label>DATE</Form.Label>
+                                    <Form.Control type='date'></Form.Control>
+                                    <Form.Text className='text-muted'>
+                                        Note: Select the appropriate date.
+                                    </Form.Text>
                                 </Form.Group>
 
                                 <Form.Group className='mb-3' controlId='formBasicEmail'>
                                     <Form.Label>CUSTOMER NAME</Form.Label>
-                                    <Form.Control type='text'></Form.Control>
+                                    <Form.Control type='text' placeholder='Enter Customer name'></Form.Control>
                                 </Form.Group>
 
                                 <Form.Group className='mb-3' controlId='formBasicEmail'>
                                     <Form.Label>CUSTOMER PHONE NUMBER</Form.Label>
-                                    <Form.Control type='text'></Form.Control>
+                                    <Form.Control type='text' placeholder='Enter Customer Phone Number'></Form.Control>
                                 </Form.Group>
 
                                 <Button variant='primary' type='submit'>MAKE CREDIT SALE</Button>

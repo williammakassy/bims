@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
-import { Button, Form } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { Container, Table } from 'react-bootstrap';
 import './ProductSection.css'
 import Axios from 'axios'
@@ -13,7 +13,6 @@ const ProductSection = ({ title, titleAdd, titleClose}) => {
     const [ productSell, setProductSell ] = useState("")
 
     const [productList, setProductList] = useState([])
-    const [productListQty, setProductListQty] = useState([])
 
     useEffect(() => {
         Axios.get('http://localhost:3002/api/getproduct').then((response) => {
@@ -133,7 +132,6 @@ const ProductSection = ({ title, titleAdd, titleClose}) => {
 
             </form>}
 
-
             <Table striped bordered hover style={{ marginTop: '5rem' }} responsive="sm">
             <thead className='text-center'>
                 <th>#</th>
@@ -150,7 +148,7 @@ const ProductSection = ({ title, titleAdd, titleClose}) => {
             {productList.map((val) => {
                 return (
                     <tbody>
-                        {val.productQty < 50 ?
+                        {val.productQty < 10 ?
                             <tr className='bg-warning'>
                                 <td>{val.id}</td>
                                 <td>{val.productName}</td>

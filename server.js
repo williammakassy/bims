@@ -19,6 +19,26 @@ bisApp.use(express.json());
 bisApp.use(bodyParser.urlencoded({extended:true}));
 
 
+
+// SALES INFORMATION SENT TO THE DATABASE
+
+
+bisApp.post('/api/insertcashsale', (req,res) => {
+
+    const productID = req.body.productID
+    const quantity = req.body.quantity
+    const amount = req.body.amount
+    const saledate = req.body.saledate
+
+    const sqlInsertCashSale = 
+    "INSERT INTO bistablesales001 (productID, quantity, amount, saledate ) VALUES(?, ?, ?, ?)";
+    bisDbConnection.query(sqlInsertCashSale, [ productID, quantity, amount, saledate ],
+        (err, result) => {
+            console.log(err);
+        })
+})
+
+
 // SELECT PRODUCTS
 
 bisApp.get("/api/getproduct", (req, res) => {
