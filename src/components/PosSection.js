@@ -37,9 +37,6 @@ const PosSection = () => {
                 saledate: saledate,
             },
         ])
-
-        
-
     }
 
   return (
@@ -67,7 +64,14 @@ const PosSection = () => {
                                         Please select the required product name.
                                     </Form.Text>
                                 </Form.Group>
-
+                                {productList.map((val) => {
+                                    <Form.Control name='productQty' type='hidden' value={val.productQty}></Form.Control>
+    
+                                })}
+                                 {productList.map((val) => {
+                                    <Form.Control name='id' type='hidden' value={val.id}></Form.Control>
+    
+                                })}
                                 <Form.Group className='mb-3' controlId='formBasicEmail'>
                                     <Form.Label>PRODUCT QTY</Form.Label>
                                     <Form.Control 

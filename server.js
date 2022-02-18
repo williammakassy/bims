@@ -29,10 +29,20 @@ bisApp.post('/api/insertcashsale', (req,res) => {
     const quantity = req.body.quantity
     const amount = req.body.amount
     const saledate = req.body.saledate
+    const productQty = req.body.productQty
+    const id = req.body.id
+
+    const newQty = productQty - quantity;
 
     const sqlInsertCashSale = 
     "INSERT INTO bistablesales001 (productID, quantity, amount, saledate ) VALUES(?, ?, ?, ?)";
     bisDbConnection.query(sqlInsertCashSale, [ productID, quantity, amount, saledate ],
+        (err, result) => {
+            console.log(err);
+        })
+    const sqlUpdateQty = 
+    "UPDATE bistableproducts001 SET productQty = newQty WHERE id = ?";
+    bisDbConnection.query(sqlUpdateQty, [ newQty, productID ],
         (err, result) => {
             console.log(err);
         })

@@ -21,7 +21,7 @@ const Sidebar = ({ title }) => {
                 placement='end'
             >
             <Offcanvas.Header closeButton>
-                <Offcanvas.Title id='offcanvasNavbarLabel'><h3 className='text-center'>BIS MENU</h3></Offcanvas.Title>
+                <Offcanvas.Title id='offcanvasNavbarLabel'><h3 className='text-center'>BIS COMPONENT</h3></Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
@@ -83,7 +83,7 @@ const Sidebar = ({ title }) => {
 
 
 Sidebar.defaultProps = {   
-    title: 'BIS APP',
+    title: 'BUSINESS INVENTORY SYSTEM',
 }
 
 export default Sidebar;
