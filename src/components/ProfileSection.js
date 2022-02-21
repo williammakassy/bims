@@ -37,7 +37,6 @@ const ProfileSection = () => {
                   <Form.Label>Confirm Password</Form.Label>
                   <Form.Control type='password'></Form.Control>
                 </Form.Group>
-
                 <Button variant='primary' type='submit'>Update</Button>
 
               </Form>

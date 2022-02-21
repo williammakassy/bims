@@ -11,6 +11,10 @@ const PosSection = () => {
     const [ saledate, setSaleDate ] = useState("")
 
     const [productList, setProductList] = useState([])
+
+    const [ productQty, setProductQty ] = useState('')
+    const [ id, setID ] = useState('')
+
     
     useEffect(() => {
         Axios.get('http://localhost:3002/api/getproduct').then((response) => {
@@ -28,6 +32,13 @@ const PosSection = () => {
             saledate: saledate,
         });
 
+        Axios.put('http://localhost:3002/api/updateqty',{
+            id: id,
+            productQty: productQty,
+            productID: productID,
+            quantity: quantity,
+        })
+        
         setProductList([
             ...setProductList, 
             {
@@ -37,6 +48,8 @@ const PosSection = () => {
                 saledate: saledate,
             },
         ])
+
+      
     }
 
   return (
@@ -65,7 +78,7 @@ const PosSection = () => {
                                     </Form.Text>
                                 </Form.Group>
                                 {productList.map((val) => {
-                                    <Form.Control name='productQty' type='hidden' value={val.productQty}></Form.Control>
+                                    <Form.Control name='productQty' type='number' value={val.productQty}></Form.Control>
     
                                 })}
                                  {productList.map((val) => {

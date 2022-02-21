@@ -148,8 +148,8 @@ const ProductSection = ({ title, titleAdd, titleClose}) => {
             {productList.map((val) => {
                 return (
                     <tbody>
-                        {val.productQty < 10 ?
-                            <tr className='bg-warning'>
+                        {val.productQty < 10  ?
+                            <tr className='bg-danger'>
                                 <td>{val.id}</td>
                                 <td>{val.productName}</td>
                                 <td>{val.productQty}</td>
@@ -167,7 +167,7 @@ const ProductSection = ({ title, titleAdd, titleClose}) => {
                                 <td className='text-center'>
                                 <Button 
                                     onClick={() => {onDeleteProduct(val.id)}}
-                                    variant='danger' 
+                                    variant='warning' 
                                     >
                                     Delete
                                 </Button>
@@ -175,7 +175,6 @@ const ProductSection = ({ title, titleAdd, titleClose}) => {
                             
                             </tr>
                     :
-
                             <tr>
                                 <td>{val.id}</td>
                                 <td>{val.productName}</td>
@@ -200,8 +199,8 @@ const ProductSection = ({ title, titleAdd, titleClose}) => {
                                 </Button>
                                 </td>
                             </tr>
-
                         }
+
                     </tbody>
                     )
                 })}
