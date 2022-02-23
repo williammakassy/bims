@@ -22,6 +22,7 @@ const ExpensesSection = ({ titleClose, titleAdd }) => {
         setExpenseList(response.data)
       })
     }, [])
+    
 
     const submitBtn = () => {
       Axios.post('http://localhost:3002/api/insertexpense', {

@@ -40,23 +40,28 @@ bisApp.post('/api/insertcashsale', (req,res) => {
    
 })
 
-bisApp.put("/api/updateqty", (req, res) => {
+
+// INSERT CREDIT SALE
+
+
+bisApp.post('/api/insertcreditsale', (req,res) => {
 
     const productID = req.body.productID
     const quantity = req.body.quantity
-    const product = req.body.productQty
+    const amount = req.body.amount
+    const saledate = req.body.saledate
+    const customername = req.body.customername
+    const customerphone = req.body.customerphone
+ 
 
-    let newQty = parseInt(quantity - product)
-
-    const sqlUpdateQty = 
-    "UPDATE bistableproducts001 SET productQty = ? WHERE id = ?";
-    bisDbConnection.query(sqlUpdateQty, [ newQty, productID ],
+    const sqlInsertCreditSale = 
+    "INSERT INTO bistablesales001 (productID, quantity, amount, saledate, customername, customerphone ) VALUES(?, ?, ?, ?, ?, ?)";
+    bisDbConnection.query(sqlInsertCreditSale, [ productID, quantity, amount, saledate, customername, customerphone ],
         (err, result) => {
             console.log(err);
         })
-
+   
 })
-
 
 // SELECT PRODUCTS
 
@@ -249,6 +254,27 @@ bisApp.delete('/api/vendordelete/:id', (req, res) => {
     const sqlDeleteVendor = "DELETE FROM bistablevendor001 WHERE id = ?"
     bisDbConnection.query(sqlDeleteVendor, id, (err, result) => {
         console.log(err);
+    })
+})
+
+
+// GET CASH SALE 
+
+
+bisApp.get('/api/getcashsale', (req, res) => {
+    const sqlSelectCashSale = "SELECT bistableproducts001.productName, bistablesales001.id, bistablesales001.quantity, bistablesales001.amount, bistablesales001.saledate FROM bistableproducts001 INNER JOIN bistablesales001 ON bistableproducts001.id = bistablesales001.productID";
+    bisDbConnection.query(sqlSelectCashSale, (err, result) => {
+        res.send(result)
+    })
+})
+
+
+// GET CREDIT SALE
+
+bisApp.get('/api/getcreditsale', (req, res) => {
+    const sqlSelectCreditSale = "SELECT bistableproducts001.productName, bistablesales001.id, bistablesales001.quantity, bistablesales001.amount, bistablesales001.saledate, bistablesales001.customername, bistablesales001.customerphone FROM bistableproducts001 INNER JOIN bistablesales001 ON bistableproducts001.id = bistablesales001.productID WHERE bistablesales001.customerphone IS NOT NULL";
+    bisDbConnection.query(sqlSelectCreditSale, (err, result) => {
+        res.send(result)
     })
 })
 

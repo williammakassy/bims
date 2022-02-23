@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { Container, Table, Row, Col } from 'react-bootstrap';
 import './SalesSection.css'
+import Axios  from 'axios';
 
 const SalesSection = ({ titleView, titleClose }) => {
 
@@ -11,6 +12,25 @@ const SalesSection = ({ titleView, titleClose }) => {
 
     const showAdd = showCreditTable 
 
+   
+    const [ cashList, setCashList ] = useState([])
+
+    const [ creditList, setCreditList ] = useState([])
+
+
+    
+    useEffect(() => {
+        Axios.get('http://localhost:3002/api/getcashsale').then((response) => {
+            setCashList(response.data)
+        })
+      }, [])
+
+
+      useEffect(() => {
+        Axios.get('http://localhost:3002/api/getcreditsale').then((response) => {
+            setCreditList(response.data)
+        })
+      }, [])
 
   return (
       <Container>
@@ -26,96 +46,63 @@ const SalesSection = ({ titleView, titleClose }) => {
               </Row>
 
 
-              {showCreditTable ? <Table striped bordered hover style={{ marginTop: '5rem' }} responsive="sm">
+              {showCreditTable ?   <Table striped bordered hover style={{ marginTop: '5rem' }} responsive="sm">
                 <thead className='text-center'>
-                    <th>#</th>
-                    <th>Product</th>
+                    <th>Product Name</th>
                     <th>Qty</th>
                     <th>Sell Price</th>
                     <th>Total Amount</th>
                     <th>Update</th>
                     <th>Delete</th>
                 </thead>
-                <tbody className='text-center'>
+                {creditList.map((val) => {
+                return (
+                <tbody>
                     <tr>
-                    <td>1</td>
-                    <td>Counter Book</td>
-                    <td>100</td>
-                    <td>20</td>
-                    <td>80</td>
-                    <td><Button variant='info'>Update</Button></td>
-                    <td><Button variant='danger'>Delete</Button></td>
-                    </tr>
-
-                    <tr>
-                    <td>2</td>
-                    <td>Counter Book</td>
-                    <td>100</td>
-                    <td>20</td>
-                    <td>80</td>
-                    <td><Button variant='info'>Update</Button></td>
-                    <td><Button variant='danger'>Delete</Button></td>
-                    </tr>
-
-                    <tr>
-                    <td>3</td>
-                    <td>Counter Book</td>
-                    <td>100</td>
-                    <td>20</td>
-                    <td>80</td>
-                    <td><Button variant='info'>Update</Button></td>
-                    <td><Button variant='danger'>Delete</Button></td>
+                    <td>{val.productName}</td>
+                    <td>{val.quantity}</td>
+                    <td>{val.amount}</td>
+                    <td>{val.amount * val.quantity}</td>
+                    <td className='text-center'><Button variant='info'>Update</Button></td>
+                    <td className='text-center'><Button variant='danger'>Delete</Button></td>
                     </tr>
                 </tbody>
+
+                )
+                })}
                 </Table>
                 
             : 
-            <Table striped bordered hover style={{ marginTop: '5rem' }} responsive="sm">
+          
+                <Table  striped bordered hover style={{ marginTop: '5rem' }} responsive="sm">
                 <thead className='text-center'>
-                    <th>#</th>
-                    <th>Product</th>
+                    <th>Product Name</th>
                     <th>Qty</th>
                     <th>Sell Price</th>
-                    <th>Discount</th>
                     <th>Total Amount</th>
                     <th>Update</th>
                     <th>Delete</th>
                 </thead>
-                <tbody className='text-center'>
-                    <tr>
-                    <td>1</td>
-                    <td>Counter Book</td>
-                    <td>100</td>
-                    <td>20</td>
-                    <td>80</td>
-                    <td>1800</td>
-                    <td><Button variant='info'>Update</Button></td>
-                    <td><Button variant='danger'>Delete</Button></td>
-                    </tr>
 
-                    <tr>
-                    <td>2</td>
-                    <td>Counter Book</td>
-                    <td>100</td>
-                    <td>20</td>
-                    <td>80</td>
-                    <td>1800</td>
-                    <td><Button variant='info'>Update</Button></td>
-                    <td><Button variant='danger'>Delete</Button></td>
-                    </tr>
+                {cashList.map((val) => {
+                return (
 
+                <tbody>
                     <tr>
-                    <td>3</td>
-                    <td>Counter Book</td>
-                    <td>100</td>
-                    <td>20</td>
-                    <td>80</td>
-                    <td>1800</td>
-                    <td><Button variant='info'>Update</Button></td>
-                    <td><Button variant='danger'>Delete</Button></td>
+                    <td>{val.productName}</td>
+                    <td>{val.quantity}</td>
+                    <td>{val.amount}</td>
+                    <td>{val.amount * val.quantity}</td>
+                    <td className='text-center'><Button variant='info'>Update</Button></td>
+                    <td className='text-center'><Button variant='danger'>Delete</Button></td>
                     </tr>
                 </tbody>
+
+                )
+                })}
+
                 </Table>
+                
             }
 
 
