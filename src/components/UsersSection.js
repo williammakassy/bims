@@ -50,6 +50,11 @@ const UsersSection = ({ titleClose, titleAdd }) => {
 
     }
 
+    const onDeleteUser = (id) => {
+        Axios.delete(`http://localhost:3002/api/userdelete/${id}`) 
+        {onDeleteUser ? window.alert('User has been deleted') : window.alert('Failed, Try again')}  
+      }
+
   return (
       <Container>
           <div style={{ marginTop: '5rem' }}>
@@ -117,7 +122,7 @@ const UsersSection = ({ titleClose, titleAdd }) => {
                 <th>#</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Update</th>
+                <th>Edit</th>
                 <th>Delete</th>
             </thead>
 
@@ -128,8 +133,15 @@ const UsersSection = ({ titleClose, titleAdd }) => {
                         <td>{val.id}</td>
                         <td>{val.fullName}</td>
                         <td>{val.userEmail}</td>
-                        <td className='text-center'><Button variant='info'>Update</Button></td>
-                        <td className='text-center'><Button variant='danger'>Delete</Button></td>
+                        <td className='text-center'><Button variant='primary'>Edit</Button></td>
+                        <td className='text-center'>
+                            <Button 
+                                onClick={() => {onDeleteUser(val.id)}}
+                                variant='danger' 
+                                >
+                                Delete
+                            </Button>
+                        </td>
                         </tr>
                     </tbody>    
                 )

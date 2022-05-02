@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
+import '/node_modules/bootstrap/dist/css/bootstrap.min.css'
 import { Button } from 'react-bootstrap';
 import { Container, Table } from 'react-bootstrap';
 import './ProductSection.css'
@@ -132,9 +133,8 @@ const ProductSection = ({ title, titleAdd, titleClose}) => {
 
             </form>}
 
-            <Table striped bordered hover style={{ marginTop: '5rem' }} responsive="sm">
+            <Table className='table table-bordered table-hover' style={{ marginTop: '5rem' }} responsive="sm">
             <thead className='text-center'>
-                <th>#</th>
                 <th>Product</th>
                 <th>Stock-In</th>
                 <th>Stock-out</th>
@@ -145,12 +145,12 @@ const ProductSection = ({ title, titleAdd, titleClose}) => {
                 <th>Delete</th>
             </thead>
 
+
             {productList.map((val) => {
                 return (
                     <tbody>
                         {val.productQty < 10  ?
                             <tr className='bg-danger'>
-                                <td>{val.id}</td>
                                 <td>{val.productName}</td>
                                 <td>{val.productQty}</td>
                                 <td>20</td>
@@ -161,7 +161,7 @@ const ProductSection = ({ title, titleAdd, titleClose}) => {
                                     <Link to='/updateProduct'>
                                         <Button 
                                             onClick={() => setProductData(val)} 
-                                            variant='info'>Edit</Button>
+                                            variant='primary'>Edit</Button>
                                     </Link>
                                 </td>
                                 <td className='text-center'>
@@ -176,7 +176,6 @@ const ProductSection = ({ title, titleAdd, titleClose}) => {
                             </tr>
                     :
                             <tr>
-                                <td>{val.id}</td>
                                 <td>{val.productName}</td>
                                 <td>{val.productQty}</td>
                                 <td>20</td>
@@ -187,7 +186,7 @@ const ProductSection = ({ title, titleAdd, titleClose}) => {
                                     <Link to='/updateProduct'>
                                         <Button 
                                             onClick={() => setProductData(val)} 
-                                            variant='info'>Edit</Button>
+                                            variant='primary'>Edit</Button>
                                     </Link>
                                 </td>
                                 <td className='text-center'>

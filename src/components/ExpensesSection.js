@@ -54,11 +54,10 @@ const ExpensesSection = ({ titleClose, titleAdd }) => {
    }
 
    const onDeleteExpense = (id) => {
-      Axios.delete(`http://localhost:3002/api/expensedelete/${id}`)  
+      Axios.delete(`http://localhost:3002/api/expensedelete/${id}`) 
+
       {onDeleteExpense ? window.alert('Expense has been deleted') : window.alert('Failed, Try again')}  
     }
-
-
 
 
   return (
@@ -138,7 +137,7 @@ const ExpensesSection = ({ titleClose, titleAdd }) => {
                         <Link to='/updateExpense'>
                             <Button 
                                 onClick={() => setExpenseData(val)} 
-                                variant='info'>Edit</Button>
+                                variant='primary'>Edit</Button>
                         </Link>
                     </td>
                     <td className='text-center'>

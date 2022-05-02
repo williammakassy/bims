@@ -56,6 +56,7 @@ const setData = (data) => {
    localStorage.setItem('vendorCity', vendorCity);
 }
 
+
 const onDelete = (id) => {
   Axios.delete(`http://localhost:3002/api/vendordelete/${id}`)
 
@@ -142,7 +143,7 @@ const onDelete = (id) => {
                       <Link to='/updatevendor'>
                         <Button 
                           onClick={() => setData(val)} 
-                          variant='info'>
+                          variant='primary'>
                             Edit
                         </Button>
                       </Link>

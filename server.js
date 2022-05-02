@@ -148,6 +148,20 @@ bisApp.post('/api/insertuser', (req, res) => {
 })
 
 
+// DELETING USER
+
+
+bisApp.delete('/api/userdelete/:id', (req, res) => {
+    const userid = req.params.id
+    const sqlDeleteUser = "DELETE FROM bistableusers001 WHERE id = ?"
+    bisDbConnection.query(sqlDeleteUser, userid, (err, result) => {
+        console.log(err);
+    })
+})
+
+
+
+
 // SELECT EXPENSES
 
 bisApp.get("/api/getexpense", (req, res) => {
@@ -273,6 +287,15 @@ bisApp.get('/api/getcashsale', (req, res) => {
 
 bisApp.get('/api/getcreditsale', (req, res) => {
     const sqlSelectCreditSale = "SELECT bistableproducts001.productName, bistablesales001.id, bistablesales001.quantity, bistablesales001.amount, bistablesales001.saledate, bistablesales001.customername, bistablesales001.customerphone FROM bistableproducts001 INNER JOIN bistablesales001 ON bistableproducts001.id = bistablesales001.productID WHERE bistablesales001.customerphone IS NOT NULL";
+    bisDbConnection.query(sqlSelectCreditSale, (err, result) => {
+        res.send(result)
+    })
+})
+
+// GET RECEIVABLES 
+
+bisApp.get('/api/getcreditsalereceivable', (req, res) => {
+    const sqlSelectCreditSale = "SELECT bistableproducts001.productName, bistablesales001.id, bistablesales001.quantity, bistablesales001.amount, bistablesales001.productID, bistablesales001.saledate, bistablesales001.customername, bistablesales001.customerphone FROM bistableproducts001 INNER JOIN bistablesales001 ON bistableproducts001.id = bistablesales001.productID WHERE bistablesales001.customerphone IS NOT NULL GROUP BY customername";
     bisDbConnection.query(sqlSelectCreditSale, (err, result) => {
         res.send(result)
     })

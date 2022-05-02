@@ -168,6 +168,7 @@ const PosSection = () => {
                                     </Form.Text>
                                 </Form.Group>
 
+
                                
                                 <Form.Group className='mb-3' controlId='formBasicEmail'>
                                     <Form.Label>PRODUCT QTY</Form.Label>

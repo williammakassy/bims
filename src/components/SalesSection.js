@@ -63,7 +63,7 @@ const SalesSection = ({ titleView, titleClose }) => {
                     <td>{val.quantity}</td>
                     <td>{val.amount}</td>
                     <td>{val.amount * val.quantity}</td>
-                    <td className='text-center'><Button variant='info'>Update</Button></td>
+                    <td className='text-center'><Button variant='primary'>Update</Button></td>
                     <td className='text-center'><Button variant='danger'>Delete</Button></td>
                     </tr>
                 </tbody>
@@ -93,7 +93,7 @@ const SalesSection = ({ titleView, titleClose }) => {
                     <td>{val.quantity}</td>
                     <td>{val.amount}</td>
                     <td>{val.amount * val.quantity}</td>
-                    <td className='text-center'><Button variant='info'>Update</Button></td>
+                    <td className='text-center'><Button variant='primary'>Update</Button></td>
                     <td className='text-center'><Button variant='danger'>Delete</Button></td>
                     </tr>
                 </tbody>
